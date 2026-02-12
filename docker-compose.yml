@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  # Servidor de Base de Datos y API (Pocketbase)
+  apexo-server:
+    image: muchobien/pocketbase:latest
+    container_name: apexo_server
+    restart: unless-stopped
+    volumes:
+      - pb_data:/pb_data
+    # Coolify se encargará de asignar el dominio aquí
+
+volumes:
+  pb_data:
