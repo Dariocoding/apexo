@@ -1,13 +1,23 @@
 version: "3.8"
 services:
-  # Servidor de Base de Datos y API (Pocketbase)
-  apexo-server:
+  # EL CEREBRO (Base de datos y API)
+  apexo-backend:
     image: muchobien/pocketbase:latest
-    container_name: apexo_server
-    restart: unless-stopped
+    restart: always
     volumes:
-      - pb_data:/pb_data
-    # Coolify se encargará de asignar el dominio aquí
+      - apexo_data:/pb_data
+
+  # LA CARA (La interfaz moderna que quieres)
+  apexo-frontend:
+    build:
+      context: https://github.com/Dariocoding/apexo # Cambia por TU fork
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - VITE_API_URL=https://dentalapi.zenmail.to # El dominio del backend
+    depends_on:
+      - apexo-backend
+    # Aquí pondrás el dominio principal, ej: app.tuconsultorio.com
 
 volumes:
-  pb_data:
+  apexo_data:
